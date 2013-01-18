@@ -417,6 +417,11 @@
 	[[self popoverWindowFrame] setNeedsDisplay:YES];
 }
 
+- (void) setArrawDistance:(CGFloat)arrowDistance
+{
+    [self popoverWindowFrame].arrowBaseDistance = arrowDistance;
+}
+
 - (CGFloat) viewMargin
 {
 	return [[self popoverWindowFrame] viewMargin];
