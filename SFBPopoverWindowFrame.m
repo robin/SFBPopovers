@@ -65,6 +65,87 @@
 	return self;
 }
 
+-(void)updateConstraints
+{
+    [super updateConstraints];
+    NSView *view = [self.subviews lastObject];
+    [view removeConstraints:[view constraints]];
+    NSDictionary *views = NSDictionaryOfVariableBindings(view);
+    NSNumber *margin = [NSNumber numberWithDouble:(self.viewMargin + self.borderWidth)];
+    NSNumber *arrowMargin = [NSNumber numberWithDouble:(self.viewMargin + self.borderWidth + self.arrowHeight + self.distance)];
+    NSDictionary *metrix = NSDictionaryOfVariableBindings(margin, arrowMargin);
+    
+    switch(self.popoverPosition) {
+		case SFBPopoverPositionLeft:
+		case SFBPopoverPositionLeftTop:
+		case SFBPopoverPositionLeftBottom:
+        {
+            NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[view]-arrowMargin-|"
+                                                                          options:0
+                                                                          metrics:metrix
+                                                                            views:views];
+            [self addConstraints:constraints];
+            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[view]-margin-|"
+                                                                 options:0
+                                                                 metrics:metrix
+                                                                   views:views];
+            [self addConstraints:constraints];
+        }
+			break;
+            
+		case SFBPopoverPositionRight:
+		case SFBPopoverPositionRightTop:
+		case SFBPopoverPositionRightBottom:
+        {
+            NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-arrowMargin-[view]-margin-|"
+                                                                           options:0
+                                                                           metrics:metrix
+                                                                             views:views];
+            [self addConstraints:constraints];
+            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[view]-margin-|"
+                                                                  options:0
+                                                                  metrics:metrix
+                                                                    views:views];
+            [self addConstraints:constraints];
+        }
+			break;
+			
+		case SFBPopoverPositionTop:
+		case SFBPopoverPositionTopLeft:
+		case SFBPopoverPositionTopRight:
+        {
+            NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[view]-margin-|"
+                                                                           options:0
+                                                                           metrics:metrix
+                                                                             views:views];
+            [self addConstraints:constraints];
+            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-margin-[view]-arrowMargin-|"
+                                                                  options:0
+                                                                  metrics:metrix
+                                                                    views:views];
+            [self addConstraints:constraints];
+        }
+			break;
+            
+		case SFBPopoverPositionBottom:
+		case SFBPopoverPositionBottomLeft:
+		case SFBPopoverPositionBottomRight:
+        {
+            NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-margin-[view]-margin-|"
+                                                                           options:0
+                                                                           metrics:metrix
+                                                                             views:views];
+            [self addConstraints:constraints];
+            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-arrowMargin-[view]-margin-|"
+                                                                  options:0
+                                                                  metrics:metrix
+                                                                    views:views];
+            [self addConstraints:constraints];
+        }
+			break;
+	}
+}
+
 - (NSRect) frameRectForContentRect:(NSRect)contentRect
 {
 	NSRect frameRect = NSInsetRect(contentRect, -self.viewMargin, -self.viewMargin);

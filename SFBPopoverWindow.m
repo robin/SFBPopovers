@@ -106,10 +106,7 @@
 	}
 
 	_popoverContentView = view;
-	NSRect viewFrame = [self contentRectForFrameRect:windowFrame];
-	[_popoverContentView setFrame:viewFrame];
-	[_popoverContentView setAutoresizingMask:NSViewNotSizable];
-
+    [_popoverContentView setTranslatesAutoresizingMaskIntoConstraints:NO];
 	[popoverWindowFrame addSubview:_popoverContentView];
 }
 
@@ -192,9 +189,6 @@
 		[self orderOut:self];
 	}
 
-	NSRect contentRect = [self contentRectForFrameRect:boundsRect];
-	[_popoverContentView setFrame:contentRect];
-
 	// Adjust the frame so the attachment point won't change
 	frameRect.origin = NSMakePoint(oldOrigin.x + (oldAttachmentPoint.x - newAttachmentPoint.x), oldOrigin.y + (oldAttachmentPoint.y - newAttachmentPoint.y));
 
@@ -258,7 +252,7 @@
 	}
 
 	[[self popoverWindowFrame] setDistance:distance];
-	[_popoverContentView setFrame:contentRect];
+	[_popoverContentView.superview updateConstraintsForSubtreeIfNeeded];
 	[self setFrame:frameRect display:YES];
 }
 
@@ -318,7 +312,7 @@
 	boundsRect.origin = NSZeroPoint;
 	NSRect contentRect = [self contentRectForFrameRect:boundsRect];
 
-	[_popoverContentView setFrame:contentRect];
+	[_popoverContentView.superview updateConstraintsForSubtreeIfNeeded];
 	[self setFrame:frameRect display:YES];
 }
 
@@ -402,7 +396,7 @@
 	}
 
 	[[self popoverWindowFrame] setArrowHeight:arrowHeight];
-	[_popoverContentView setFrame:contentRect];
+	[_popoverContentView.superview updateConstraintsForSubtreeIfNeeded];
 	[self setFrame:frameRect display:YES];
 }
 
@@ -457,12 +451,8 @@
 	}
 
 	[[self popoverWindowFrame] setViewMargin:viewMargin];
-
-	NSRect boundsRect = frameRect;
-	boundsRect.origin = NSZeroPoint;
-	NSRect contentRect = [self contentRectForFrameRect:boundsRect];
 	
-	[_popoverContentView setFrame:contentRect];
+	[_popoverContentView.superview updateConstraintsForSubtreeIfNeeded];
 	[self setFrame:frameRect display:YES];
 }
 
