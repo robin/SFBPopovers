@@ -60,6 +60,7 @@
 - (void) setArrowHeight:(CGFloat)arrowHeight;
 - (BOOL) drawRoundCornerBesideArrow;
 - (void) setDrawRoundCornerBesideArrow:(BOOL)drawRoundCornerBesideArrow;
+- (void) setArrawDistance:(CGFloat)arrowDistance;
 
 - (CGFloat) viewMargin;
 - (void) setViewMargin:(CGFloat)viewMargin;

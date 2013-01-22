@@ -61,6 +61,8 @@
 	[self changeArrowWidth:self.arrowWidthSlider];
 	[self changeArrowHeight:self.arrowHeightSlider];
 	[self changeDistance:self.distanceSlider];
+    
+    [_popover setArrawDistance:10];
 }
 
 - (IBAction) changePosition:(id)sender

@@ -355,6 +355,11 @@
 	[_popoverWindow setDrawRoundCornerBesideArrow:drawRoundCornerBesideArrow];
 }
 
+- (void) setArrawDistance:(CGFloat)arrowDistance
+{
+    [_popoverWindow setArrawDistance:arrowDistance];
+}
+
 - (CGFloat) viewMargin
 {
 	return [_popoverWindow viewMargin];

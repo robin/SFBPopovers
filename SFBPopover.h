@@ -129,6 +129,9 @@ typedef enum SFBPopoverPosition SFBPopoverPosition;
 - (BOOL) drawRoundCornerBesideArrow;
 - (void) setDrawRoundCornerBesideArrow:(BOOL)drawRoundCornerBesideArrow;
 
+// The distance between arraw and the border
+- (void) setArrawDistance:(CGFloat)arrowDistance;
+
 // The spacing between the edge of the popover's content view and its border
 - (CGFloat) viewMargin;
 - (void) setViewMargin:(CGFloat)viewMargin;

@@ -52,6 +52,7 @@
 @property (nonatomic, assign) CGFloat arrowWidth;
 @property (nonatomic, assign) CGFloat arrowHeight;
 @property (nonatomic, assign) BOOL drawRoundCornerBesideArrow;
+@property (nonatomic, assign) CGFloat arrowBaseDistance;
 
 @property (nonatomic, assign) CGFloat viewMargin;
 @property (nonatomic, copy) NSColor * backgroundColor;

@@ -235,7 +235,7 @@
 	CGFloat midY = NSMidY(rect);
 	CGFloat maxY = NSMaxY(rect);
 
-	CGFloat arrowDistance = (self.arrowHeight / 2) + (2 * self.borderWidth);
+	CGFloat arrowDistance = (self.arrowHeight / 2) + (2 * self.borderWidth) + self.arrowBaseDistance;
 	if(self.drawRoundCornerBesideArrow)
 		arrowDistance += self.cornerRadius;
 
@@ -399,13 +399,16 @@
 
 	// If arrow should be drawn at top-left point, draw it.
 	if(SFBPopoverPositionBottomRight == self.popoverPosition)
+    {
+		[path lineToPoint:NSMakePoint(currentPoint.x + self.arrowBaseDistance, currentPoint.y)];
 		[self appendArrowToPath:path];
+    }
 	else if(SFBPopoverPositionBottom == self.popoverPosition) {
 		[path lineToPoint:NSMakePoint(midX - (self.arrowWidth / 2), maxY)];
 		[self appendArrowToPath:path];
 	}
 	else if(SFBPopoverPositionBottomLeft == self.popoverPosition) {
-		[path lineToPoint:NSMakePoint(endOfLine.x - self.arrowWidth, maxY)];
+		[path lineToPoint:NSMakePoint(endOfLine.x - self.arrowWidth -  self.arrowBaseDistance, maxY)];
 		[self appendArrowToPath:path];
 	}
 
@@ -428,13 +431,16 @@
 
 	// If arrow should be drawn at right-top point, draw it.
 	if(SFBPopoverPositionLeftBottom == self.popoverPosition)
+    {
+        [path relativeLineToPoint:NSMakePoint(0, -self.arrowBaseDistance)];
 		[self appendArrowToPath:path];
+    }
 	else if(SFBPopoverPositionLeft == self.popoverPosition) {
 		[path lineToPoint:NSMakePoint(maxX, midY + (self.arrowWidth / 2))];
 		[self appendArrowToPath:path];
 	}
 	else if(SFBPopoverPositionLeftTop == self.popoverPosition) {
-		[path lineToPoint:NSMakePoint(maxX, endOfLine.y + self.arrowWidth)];
+		[path lineToPoint:NSMakePoint(maxX, endOfLine.y + self.arrowWidth + self.arrowBaseDistance)];
 		[self appendArrowToPath:path];
 	}
 
@@ -457,13 +463,16 @@
 
 	// If arrow should be drawn at bottom-right point, draw it.
 	if(SFBPopoverPositionTopLeft == self.popoverPosition)
+    {
+        [path relativeLineToPoint:NSMakePoint(-self.arrowBaseDistance, 0)];
 		[self appendArrowToPath:path];
+    }
 	else if(SFBPopoverPositionTop == self.popoverPosition) {
 		[path lineToPoint:NSMakePoint(midX + (self.arrowWidth / 2), minY)];
 		[self appendArrowToPath:path];
 	}
 	else if(SFBPopoverPositionTopRight == self.popoverPosition) {
-		[path lineToPoint:NSMakePoint(endOfLine.x + self.arrowWidth, minY)];
+		[path lineToPoint:NSMakePoint(endOfLine.x + self.arrowWidth + self.arrowBaseDistance, minY)];
 		[self appendArrowToPath:path];
 	}
 
@@ -486,13 +495,16 @@
 
 	// If arrow should be drawn at left-bottom point, draw it.
 	if(SFBPopoverPositionRightTop == self.popoverPosition)
+    {
+        [path relativeLineToPoint:NSMakePoint(0, self.arrowBaseDistance)];
 		[self appendArrowToPath:path];
+    }
 	else if(SFBPopoverPositionRight == self.popoverPosition) {
 		[path lineToPoint:NSMakePoint(minX, midY - (self.arrowWidth / 2))];
 		[self appendArrowToPath:path];
 	}
 	else if(SFBPopoverPositionRightBottom == self.popoverPosition) {
-		[path lineToPoint:NSMakePoint(minX, endOfLine.y - self.arrowWidth)];
+		[path lineToPoint:NSMakePoint(minX, endOfLine.y - self.arrowWidth - self.arrowBaseDistance)];
 		[self appendArrowToPath:path];
 	}
 
