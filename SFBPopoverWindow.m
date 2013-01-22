@@ -71,7 +71,7 @@
 
 - (BOOL) canBecomeKeyWindow
 {
-	return YES;
+	return NO;
 }
 
 - (BOOL) canBecomeMainWindow
@@ -90,6 +90,7 @@
 		return;
 
 	SFBPopoverWindowFrame *popoverWindowFrame = [self popoverWindowFrame];
+    popoverWindowFrame.identifier = @"windowFrame";
 	if(nil == popoverWindowFrame) {
 		popoverWindowFrame = [[SFBPopoverWindowFrame alloc] initWithFrame:NSZeroRect];
 		[super setContentView:popoverWindowFrame];
@@ -252,7 +253,6 @@
 	}
 
 	[[self popoverWindowFrame] setDistance:distance];
-	[_popoverContentView.superview updateConstraintsForSubtreeIfNeeded];
 	[self setFrame:frameRect display:YES];
 }
 
@@ -307,10 +307,6 @@
 	}
 	
 	[[self popoverWindowFrame] setBorderWidth:borderWidth];
-
-	NSRect boundsRect = frameRect;
-	boundsRect.origin = NSZeroPoint;
-	NSRect contentRect = [self contentRectForFrameRect:boundsRect];
 
 	[_popoverContentView.superview updateConstraintsForSubtreeIfNeeded];
 	[self setFrame:frameRect display:YES];
