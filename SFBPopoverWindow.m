@@ -194,6 +194,7 @@
 	frameRect.origin = NSMakePoint(oldOrigin.x + (oldAttachmentPoint.x - newAttachmentPoint.x), oldOrigin.y + (oldAttachmentPoint.y - newAttachmentPoint.y));
 
 	[[self popoverWindowFrame] setNeedsDisplay:YES];
+    [[self popoverWindowFrame] updateConstraints];
 	[self setFrame:frameRect display:YES];
 
 	if(isVisible) {
