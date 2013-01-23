@@ -71,7 +71,7 @@
 
 - (BOOL) canBecomeKeyWindow
 {
-	return NO;
+	return YES;
 }
 
 - (BOOL) canBecomeMainWindow
