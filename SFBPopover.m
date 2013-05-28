@@ -413,6 +413,10 @@
 		[parentWindow removeChildWindow:_popoverWindow];
 		[_popoverWindow orderOut:nil];
 		[_popoverWindow setAlphaValue:1];
+        if (self.releaseAfterClose) {
+            animation.delegate = nil;
+            [_popoverWindow release];
+        }
 	}
 }
 

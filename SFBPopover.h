@@ -59,6 +59,7 @@ typedef enum SFBPopoverPosition SFBPopoverPosition;
 @property (nonatomic, assign) BOOL animates;
 @property (nonatomic, assign) BOOL closesWhenPopoverResignsKey;
 @property (nonatomic, assign) BOOL closesWhenApplicationBecomesInactive;
+@property (nonatomic, assign) BOOL releaseAfterClose;
 
 // ========================================
 // Creation
