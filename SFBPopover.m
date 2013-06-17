@@ -84,7 +84,6 @@
 - (void) dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 - (SFBPopoverPosition) bestPositionInWindow:(NSWindow *)window atPoint:(NSPoint)point
@@ -415,7 +414,6 @@
 		[_popoverWindow setAlphaValue:1];
         if (self.releaseAfterClose) {
             animation.delegate = nil;
-            [_popoverWindow release];
         }
 	}
 }

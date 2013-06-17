@@ -92,7 +92,7 @@
 	SFBPopoverWindowFrame *popoverWindowFrame = [self popoverWindowFrame];
     popoverWindowFrame.identifier = @"windowFrame";
 	if(nil == popoverWindowFrame) {
-		popoverWindowFrame = [[[SFBPopoverWindowFrame alloc] initWithFrame:NSZeroRect] autorelease];
+		popoverWindowFrame = [[SFBPopoverWindowFrame alloc] initWithFrame:NSZeroRect];
 		[super setContentView:popoverWindowFrame];
 	}
 
