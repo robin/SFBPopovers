@@ -39,6 +39,7 @@
 @private
 	NSViewController * _contentViewController;
 	SFBPopoverWindow * _popoverWindow;
+    id _localMouseDownEventMonitor;
 }
 @end
 
@@ -217,6 +218,14 @@
 
 	[window addChildWindow:_popoverWindow ordered:NSWindowAbove];
 
+    _localMouseDownEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSLeftMouseDownMask|NSRightMouseDownMask|NSOtherMouseDown handler:^(NSEvent *event) {
+        // If the mouse event is in the suggestion window, then there is nothing to do.
+        if ([event window] != _popoverWindow) {
+            [self closePopover:self];
+        }
+        return event;
+    }];
+
 	[_popoverWindow makeKeyAndOrderFront:nil];
 
 	if(self.animates)
@@ -251,6 +260,10 @@
 		NSWindow *parentWindow = [_popoverWindow parentWindow];
 		[parentWindow removeChildWindow:_popoverWindow];
 		[_popoverWindow orderOut:sender];
+        if (_localMouseDownEventMonitor) {
+            [NSEvent removeMonitor:_localMouseDownEventMonitor];
+            _localMouseDownEventMonitor = nil;
+        }
 	}
 }
 
@@ -411,6 +424,10 @@
 		NSWindow *parentWindow = [_popoverWindow parentWindow];
 		[parentWindow removeChildWindow:_popoverWindow];
 		[_popoverWindow orderOut:nil];
+        if (_localMouseDownEventMonitor) {
+            [NSEvent removeMonitor:_localMouseDownEventMonitor];
+            _localMouseDownEventMonitor = nil;
+        }
 		[_popoverWindow setAlphaValue:1];
         if (self.releaseAfterClose) {
             animation.delegate = nil;
