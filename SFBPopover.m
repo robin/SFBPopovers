@@ -412,6 +412,10 @@
 	[_popoverWindow setResizable:resizable];
 }
 
+- (void) setCanBecomeKeyWindow:(BOOL)canBecomeKeyWindow
+{
+    _popoverWindow.canBecomeKey = canBecomeKeyWindow;
+}
 @end
 
 @implementation SFBPopover (NSAnimationDelegateMethods)

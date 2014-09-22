@@ -141,6 +141,8 @@ typedef enum SFBPopoverPosition SFBPopoverPosition;
 - (NSColor *) backgroundColor;
 - (void) setBackgroundColor:(NSColor *)backgroundColor;
 
+- (void) setCanBecomeKeyWindow:(BOOL)canBecomeKeyWindow;
+
 // Specifies whether the popover may be moved by dragging
 - (BOOL) isMovable;
 - (void) setMovable:(BOOL)movable;

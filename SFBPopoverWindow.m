@@ -54,6 +54,7 @@
 		[self setAlphaValue:1];
 		[self setOpaque:NO];
 		[self setHasShadow:YES];
+        self.canBecomeKey = NO;
 	}
 
 	return self;
@@ -71,7 +72,7 @@
 
 - (BOOL) canBecomeKeyWindow
 {
-	return NO;
+	return self.canBecomeKey;
 }
 
 - (BOOL) canBecomeMainWindow
@@ -79,12 +80,7 @@
 	return NO;
 }
 
-- (NSView *) contentView
-{
-	return _popoverContentView;
-}
-
-- (void) setContentView:(NSView *)view
+- (void)setContentView:(NSView *)view
 {
 	if([_popoverContentView isEqualTo:view])
 		return;

@@ -37,6 +37,8 @@
 // ========================================
 @interface SFBPopoverWindow : NSWindow
 
+@property (nonatomic, assign) BOOL canBecomeKey;
+
 // ========================================
 // Popover window properties
 - (SFBPopoverPosition) popoverPosition;
