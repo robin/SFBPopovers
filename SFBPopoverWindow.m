@@ -251,6 +251,7 @@
 	}
 
 	[[self popoverWindowFrame] setDistance:distance];
+    [[self popoverWindowFrame] setNeedsUpdateConstraints:true];
 	[self setFrame:frameRect display:YES];
 }
 
