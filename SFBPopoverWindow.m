@@ -501,3 +501,13 @@
 }
 
 @end
+
+@implementation NSWindow (SFBPopoverWindow)
+
+-(NSPoint)convertPointToScreen:(NSPoint)point {
+    NSRect rect = { .origin = point, .size = NSZeroSize };
+    NSRect rectOnScreen = [self convertRectToScreen:rect];
+    return rectOnScreen.origin;
+}
+
+@end

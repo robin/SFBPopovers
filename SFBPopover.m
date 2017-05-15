@@ -34,6 +34,41 @@
 
 #include <QuartzCore/QuartzCore.h>
 
+// A custom delegate class is used since CAAnimation retains its delegate
+@interface SFBPopoverAnimationDelegate : NSObject<CAAnimationDelegate>
+{
+@private
+    __weak SFBPopoverWindow *_popoverWindow;
+}
+
+- (instancetype) initWithPopoverWindow:(SFBPopoverWindow *)popoverWindow;
+
+@end
+
+@implementation SFBPopoverAnimationDelegate
+
+- (instancetype) initWithPopoverWindow:(SFBPopoverWindow *)popoverWindow
+{
+    if((self = [super init])) {
+        _popoverWindow = popoverWindow;
+    }
+    return self;
+}
+
+- (void) animationDidStop:(CAAnimation *)animation finished:(BOOL)flag
+{
+#pragma unused(animation)
+    // Detect the end of fade out and close the window
+    if(flag && 0 == [_popoverWindow alphaValue]) {
+        NSWindow *parentWindow = [_popoverWindow parentWindow];
+        [parentWindow removeChildWindow:_popoverWindow];
+        [_popoverWindow orderOut:nil];
+        [_popoverWindow setAlphaValue:1];
+    }
+}
+
+@end
+
 @interface SFBPopover ()
 {
 @private
@@ -73,7 +108,7 @@
 		[_popoverWindow setMinSize:[contentView frame].size];
 
 		CAAnimation *animation = [CABasicAnimation animation];
-		[animation setDelegate:self];
+		[animation setDelegate:[[SFBPopoverAnimationDelegate alloc] initWithPopoverWindow:_popoverWindow]];
 		[_popoverWindow setAnimations:[NSDictionary dictionaryWithObject:animation forKey:@"alphaValue"]];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResignKey:) name:NSWindowDidResignKeyNotification object:_popoverWindow];
@@ -96,7 +131,7 @@
 	else
 		screenFrame = [[NSScreen mainScreen] visibleFrame];
 
-	NSPoint pointOnScreen = window ? [window convertBaseToScreen:point] : point;
+	NSPoint pointOnScreen = window ? [window convertPointToScreen:point] : point;
 
 	SFBPopoverWindow *popoverWindow = _popoverWindow;
 	NSSize popoverSize = [popoverWindow frame].size;
@@ -206,7 +241,7 @@
 		[_popoverWindow setPopoverPosition:[self bestPositionInWindow:window atPoint:point]];
 
 	NSPoint attachmentPoint = [[_popoverWindow popoverWindowFrame] attachmentPoint];
-	NSPoint pointOnScreen = (nil != window) ? [window convertBaseToScreen:point] : point;
+	NSPoint pointOnScreen = (nil != window) ? [window convertPointToScreen:point] : point;
 
 	pointOnScreen.x -= attachmentPoint.x;
 	pointOnScreen.y -= attachmentPoint.y;
@@ -236,7 +271,7 @@
 {
 	NSPoint attachmentPoint = [[_popoverWindow popoverWindowFrame] attachmentPoint];
 	NSWindow *window = [_popoverWindow parentWindow];
-	NSPoint pointOnScreen = (nil != window) ? [window convertBaseToScreen:point] : point;
+	NSPoint pointOnScreen = (nil != window) ? [window convertPointToScreen:point] : point;
 
 	pointOnScreen.x -= attachmentPoint.x;
 	pointOnScreen.y -= attachmentPoint.y;
@@ -416,29 +451,6 @@
 {
     _popoverWindow.canBecomeKey = canBecomeKeyWindow;
 }
-@end
-
-@implementation SFBPopover (NSAnimationDelegateMethods)
-
-- (void) animationDidStop:(CAAnimation *)animation finished:(BOOL)flag 
-{
-#pragma unused(animation)
-	// Detect the end of fade out and close the window
-	if(flag && 0 == [_popoverWindow alphaValue]) {
-		NSWindow *parentWindow = [_popoverWindow parentWindow];
-		[parentWindow removeChildWindow:_popoverWindow];
-		[_popoverWindow orderOut:nil];
-        if (_localMouseDownEventMonitor) {
-            [NSEvent removeMonitor:_localMouseDownEventMonitor];
-            _localMouseDownEventMonitor = nil;
-        }
-		[_popoverWindow setAlphaValue:1];
-        if (self.releaseAfterClose) {
-            animation.delegate = nil;
-        }
-	}
-}
-
 @end
 
 @implementation SFBPopover (NSWindowDelegateMethods)

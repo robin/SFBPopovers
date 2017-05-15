@@ -321,7 +321,7 @@
 		return;
 
 	NSWindow *window = [self window];
-	NSPoint originalMouseLocation = [window convertBaseToScreen:[event locationInWindow]];
+	NSPoint originalMouseLocation = [window convertPointToScreen:[event locationInWindow]];
 	NSRect originalFrame = [window frame];
 	
     for(;;) {
@@ -330,7 +330,7 @@
         if(NSEventTypeLeftMouseUp == [newEvent type])
 			break;
 		
-		NSPoint newMouseLocation = [window convertBaseToScreen:[newEvent locationInWindow]];
+		NSPoint newMouseLocation = [window convertPointToScreen:[newEvent locationInWindow]];
 		NSPoint delta = NSMakePoint(newMouseLocation.x - originalMouseLocation.x, newMouseLocation.y - originalMouseLocation.y);
 		
 		NSRect newFrame = originalFrame;		

@@ -76,3 +76,9 @@
 - (void) setResizable:(BOOL)resizable;
 
 @end
+
+@interface NSWindow (SFBPopoverWindow)
+
+- (NSPoint) convertPointToScreen:(NSPoint)point;
+
+@end
