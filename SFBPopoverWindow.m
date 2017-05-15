@@ -105,6 +105,7 @@
 	_popoverContentView = view;
     [_popoverContentView setTranslatesAutoresizingMaskIntoConstraints:NO];
 	[popoverWindowFrame addSubview:_popoverContentView];
+    [popoverWindowFrame setNeedsUpdateConstraints:true];
 }
 
 - (void) setContentSize:(NSSize)size

@@ -68,8 +68,11 @@
 -(void)updateConstraints
 {
     [super updateConstraints];
-    [self removeConstraints:[self constraints]];
     NSView *view = [self.subviews lastObject];
+    if (view == nil) {
+        return;
+    }
+    [self removeConstraints:[self constraints]];
     NSDictionary *views = NSDictionaryOfVariableBindings(view);
     NSNumber *margin = [NSNumber numberWithDouble:(self.viewMargin + self.borderWidth)];
     NSNumber *arrowMargin = [NSNumber numberWithDouble:(self.viewMargin + self.borderWidth + self.arrowHeight + self.distance)];
