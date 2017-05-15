@@ -325,9 +325,9 @@
 	NSRect originalFrame = [window frame];
 	
     for(;;) {
-        NSEvent *newEvent = [window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        NSEvent *newEvent = [window nextEventMatchingMask:(NSEventMaskLeftMouseDragged | NSEventMaskLeftMouseUp)];
 		
-        if(NSLeftMouseUp == [newEvent type])
+        if(NSEventTypeLeftMouseUp == [newEvent type])
 			break;
 		
 		NSPoint newMouseLocation = [window convertBaseToScreen:[newEvent locationInWindow]];

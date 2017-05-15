@@ -218,7 +218,7 @@
 
 	[window addChildWindow:_popoverWindow ordered:NSWindowAbove];
 
-    _localMouseDownEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSLeftMouseDownMask|NSRightMouseDownMask|NSOtherMouseDown handler:^(NSEvent *event) {
+    _localMouseDownEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown|NSEventMaskRightMouseDown|NSEventTypeOtherMouseDown handler:^(NSEvent *event) {
         // If the mouse event is in the suggestion window, then there is nothing to do.
         if ([event window] != _popoverWindow) {
             [self closePopover:self];
